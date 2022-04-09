@@ -23,3 +23,18 @@ class Post(models.Model):
     def unpublish(self):
         self.published_date = None
         self.save()
+
+
+class Comment(models.Model):
+    author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    text = models.TextField()
+    create_date = models.DateTimeField(auto_now_add=True)
+    approved = models.BooleanField()
+
+    def __str__(self):
+        return self.text[:100]
+
+    def approve(self):
+        self.approved = True
+        self.save()
