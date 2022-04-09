@@ -33,7 +33,17 @@
     </div>
 </nav>
 
-
+<div class="jumbotron">
+    {% for post in posts %}
+    <h1>
+        <a href="#">{{ post.title }}</a>
+    </h1>
+        <div class="date">
+        Published on: {{ post.published_date }}
+        </div>
+{#        <a href="#">Comments: {{ count(post.comments.all) }}</a>#}
+    {% endfor %}
+</div>
 <script src="{% static 'js/bootstrap.js' %}"></script>
 </body>
 </html>
