@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="jumbotron">
+    {% for post in post_list %}
+    <h1>
+        <a href="#">{{ post.title }}</a>
+    </h1>
+        <div class="date">
+        Published on: {{ post.published_date }}
+        </div>
+{#        <a href="#">Comments: {{ count(post.comments.all) }}</a>#}
+    {% endfor %}
+</div>
+{% endblock %}

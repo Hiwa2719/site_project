@@ -20,7 +20,7 @@
                     <a class="nav-link active" aria-current="page" href="#">My Blog</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{% url 'about' %}">About</a>
+                    <a class="nav-link active" aria-current="page" href="{% url 'blog:about' %}">About</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="https://www.github.com">Github</a>
@@ -32,18 +32,10 @@
         </div>
     </div>
 </nav>
+{% block content %}
+    <!-- Other templates code goes here -->
+{% endblock %}
 
-<div class="jumbotron">
-    {% for post in posts %}
-    <h1>
-        <a href="#">{{ post.title }}</a>
-    </h1>
-        <div class="date">
-        Published on: {{ post.published_date }}
-        </div>
-{#        <a href="#">Comments: {{ count(post.comments.all) }}</a>#}
-    {% endfor %}
-</div>
 <script src="{% static 'js/bootstrap.js' %}"></script>
 </body>
 </html>
