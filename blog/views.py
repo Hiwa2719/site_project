@@ -20,4 +20,4 @@ class PostCreateView(CreateView):
 
 
 class AboutView(TemplateView):
-    pass
+    template_name = 'blog/about.html'
