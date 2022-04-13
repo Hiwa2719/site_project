@@ -2,15 +2,22 @@
 
 
 {% block content %}
-<div class="jumbotron">
-    {% for post in post_list %}
-    <h1>
-        <a href="#">{{ post.title }}</a>
-    </h1>
-        <div class="date">
-        Published on: {{ post.published_date }}
+    <div class="container">
+        <div class="m-5 p-5 bg-light rounded-3 text-center">
+            {% for post in post_list %}
+                <div class="post_list">
+                    <h1>
+                        <a href="{{ post.get_absolute_url }}" class="text-decoration-none">{{ post.title }}</a>
+                    </h1>
+                    <div class="date">
+                        Published on: {{ post.published_date }}
+                    </div>
+                    {% with comments=post.comments.all.count %}
+                        <a href="{{ post.get_absolute_url }}" class="text-decoration-none">{% if comments %}Comments:
+                            {{ comments }}{% else %}No Comments{% endif %}</a>
+                    {% endwith %}
+                </div>
+            {% endfor %}
         </div>
-{#        <a href="#">Comments: {{ count(post.comments.all) }}</a>#}
-    {% endfor %}
-</div>
+    </div>
 {% endblock %}

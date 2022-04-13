@@ -5,7 +5,8 @@ from django.shortcuts import get_object_or_404
 
 
 class PostListView(ListView):
-    queryset = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
+    def get_queryset(self):
+        return Post.objects.filter(published_date__lte=timezone.now())
 
 
 class PostDetailView(DetailView):
