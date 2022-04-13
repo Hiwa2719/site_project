@@ -10,11 +10,9 @@ class PostListView(ListView):
         return Post.objects.filter(published_date__lte=timezone.now())
 
 
-class PostDetailView(DetailView):
+class PostDetailView(LoginRequiredMixin, DetailView):
     def get_object(self, queryset=None):
-        if self.request.user.is_authenticated:
-            return get_object_or_404(Post, pk=self.kwargs.get('pk'))
-        return get_object_or_404(Post.objects.filter(published_date__lte=timezone.now()), pk=self.kwargs.get('pk'))
+        return get_object_or_404(Post, pk=self.kwargs.get('pk'))
 
 
 class PostCreateView(LoginRequiredMixin, CreateView):
@@ -30,3 +28,11 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 
 class AboutView(TemplateView):
     template_name = 'blog/about.html'
+
+
+class PostUpdateView():
+    pass  # todo
+
+
+class PostDeleteView():
+    pass  # todo

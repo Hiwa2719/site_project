@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <div class="container">
+        <div class="m-5 p-5 rounded-3 bg-light">
+            <div class="text-center">
+                <h1>{{ post.title }}</h1>
+                <p>{{ post.published_date }}</p>
+            </div>
+            <p>Author: {{ post.author }}</p>
+            <p>{{ post.text }}</p>
+            {% if self.request.use == post.author %}
+                <a href="{% url 'blog:post_update' pk=post.pk %}" class="btn btn-warning">Update</a>
+                <a href="{% url 'blog:post_delete' pk=post.pk %}" class="btn btn-danger">Delete</a>
+            {% endif %}
+            <hr>
+            <a href="#" class="btn btn-success mb-3">Add Comment</a>
+{#            {% for comment in post.comments.approved %}#}
+{#            #}
+{#            {% endfor %}#}
+        </div>
+    </div>
+{% endblock %}
