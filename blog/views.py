@@ -3,6 +3,7 @@ from django.utils import timezone
 from .models import Post, Comment
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import Http404
 
 
 class PostListView(ListView):
@@ -30,11 +31,19 @@ class AboutView(TemplateView):
     template_name = 'blog/about.html'
 
 
-class PostUpdateView(UpdateView):
+class UserEditCheckMixin:
+    def dispatch(self, request, *args, **kwargs):
+        pk = self.kwargs.get('pk')
+        author = self.model.objects.get(pk=pk).author
+        if self.request.user != author:
+            raise Http404
+        return super().dispatch(request, *args, **kwargs)
+
+
+class PostUpdateView(UserEditCheckMixin, UpdateView):
     model = Post
     fields = 'title', 'text'
 
 
-class PostDeleteView(DeleteView):
+class PostDeleteView(UserEditCheckMixin, DeleteView):
     model = Post
-
