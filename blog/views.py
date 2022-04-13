@@ -1,4 +1,4 @@
-from django.views.generic import ListView, DetailView, CreateView, TemplateView
+from django.views.generic import ListView, DetailView, CreateView, TemplateView, UpdateView, DeleteView
 from django.utils import timezone
 from .models import Post, Comment
 from django.shortcuts import get_object_or_404
@@ -30,9 +30,11 @@ class AboutView(TemplateView):
     template_name = 'blog/about.html'
 
 
-class PostUpdateView():
-    pass  # todo
+class PostUpdateView(UpdateView):
+    model = Post
+    fields = 'title', 'text'
 
 
-class PostDeleteView():
-    pass  # todo
+class PostDeleteView(DeleteView):
+    model = Post
+

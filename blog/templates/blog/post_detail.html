@@ -10,7 +10,7 @@
             </div>
             <p>Author: {{ post.author }}</p>
             <p>{{ post.text }}</p>
-            {% if self.request.use == post.author %}
+            {% if request.user == post.author %}
                 <a href="{% url 'blog:post_update' pk=post.pk %}" class="btn btn-warning">Update</a>
                 <a href="{% url 'blog:post_delete' pk=post.pk %}" class="btn btn-danger">Delete</a>
             {% endif %}
