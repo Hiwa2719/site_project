@@ -74,3 +74,9 @@ class CommentDeleteView(UserEditCheckMixin, DeleteView):
     model = Comment
     template_name = 'blog/post_confirm_delete.html'
     success_url = reverse_lazy('blog:index')
+
+
+class MyPosts(LoginRequiredMixin, ListView):
+    def get_queryset(self):
+        author = self.request.user
+        return Post.objects.filter(published_date__lte=timezone.now(), author=author)
