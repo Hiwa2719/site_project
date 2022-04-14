@@ -7,8 +7,9 @@
             <div class="text-center">
             <h1>Are you sure to delete this post? </h1>
                 <form action="#" method="POST">
+                {% csrf_token %}
                     <input type="submit" value="Yes" class="btn btn-danger">
-                    <a href="{% url 'blog:post_detail' pk=post.pk %}" class="btn btn-success">Cancel</a>
+                    <a href="{% if post %}{% url 'blog:post_detail' pk=post.pk %}{% else %}{% url 'blog:index' %}{% endif %}" class="btn btn-success">Cancel</a>
                 </form>
             </div>
         </div>

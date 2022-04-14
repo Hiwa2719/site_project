@@ -16,9 +16,15 @@
             {% endif %}
             <hr>
             <a href="{% url 'blog:comment_create' pk=post.pk %}" class="btn btn-success mb-3">Add Comment</a>
-{#            {% for comment in post.comments.approved %}#}
-{#            #}
-{#            {% endfor %}#}
+            {% for comment in post.approved_comments %}
+                <p>Posted By: {{ comment.author|title }}</p>
+                <p>{{ comment.create_date }}</p>
+                <p class="small">{{ comment.text|safe|linebreaks }}</p>
+                {% if comment.author == request.user %}
+                <a href="{% url 'blog:comment_delete' comment.pk %}" class="btn btn-danger">Delete</a>
+                {% endif %}
+                <p>*****************************************************************</p>
+            {% endfor %}
         </div>
     </div>
 {% endblock %}

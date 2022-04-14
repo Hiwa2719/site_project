@@ -12,7 +12,7 @@
                     <div class="date">
                         Published on: {{ post.published_date }}
                     </div>
-                    {% with comments=post.comments.all.count %}
+                    {% with comments=post.approved_comments.all.count %}
                         <a href="{{ post.get_absolute_url }}" class="text-decoration-none">{% if comments %}Comments:
                             {{ comments }}{% else %}No Comments{% endif %}</a>
                     {% endwith %}

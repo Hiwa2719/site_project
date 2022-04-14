@@ -1,6 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import Http404
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
@@ -50,6 +50,7 @@ class PostUpdateView(UserEditCheckMixin, UpdateView):
 
 class PostDeleteView(UserEditCheckMixin, DeleteView):
     model = Post
+    success_url = reverse_lazy('blog:index')
 
 
 class CommentCreateView(LoginRequiredMixin, CreateView):
@@ -71,3 +72,5 @@ class CommentCreateView(LoginRequiredMixin, CreateView):
 
 class CommentDeleteView(UserEditCheckMixin, DeleteView):
     model = Comment
+    template_name = 'blog/post_confirm_delete.html'
+    success_url = reverse_lazy('blog:index')
