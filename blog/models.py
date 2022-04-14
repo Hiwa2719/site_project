@@ -13,6 +13,9 @@ class Post(models.Model):
     def __str__(self):
         return f'{self.author} --> {self.title}'
 
+    def approved_comments(self):
+        return self.comment_set.filter(approved=True)
+
     def get_absolute_url(self):
         return reverse('blog:post_detail', kwargs={'pk': self.pk})
 
