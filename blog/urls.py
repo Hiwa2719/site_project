@@ -5,6 +5,10 @@ app_name = 'blog'
 
 urlpatterns = [
     path('', views.PostListView.as_view(), name='index'),
+    path('comment/', include([
+        path('create/<int:pk>/', views.CommentCreateView.as_view(), name='comment_create'),
+        path('delete/<int:pk>/', views.CommentDeleteView.as_view(), name='comment_delete'),
+    ])),
     path('post/', include([
         path('detail/<int:pk>/', views.PostDetailView.as_view(), name='post_detail'),
         path('create/', views.PostCreateView.as_view(), name='post_create'),

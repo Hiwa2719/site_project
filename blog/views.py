@@ -1,9 +1,12 @@
-from django.views.generic import ListView, DetailView, CreateView, TemplateView, UpdateView, DeleteView
-from django.utils import timezone
-from .models import Post, Comment
-from django.shortcuts import get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import Http404
+from django.urls import reverse
+from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404
+from django.utils import timezone
+from django.views.generic import ListView, DetailView, CreateView, TemplateView, UpdateView, DeleteView
+
+from .models import Post, Comment
 
 
 class PostListView(ListView):
@@ -24,7 +27,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         self.object = form.save(commit=False)
         self.object.author = self.request.user
         self.object.save()
-        return super().form_valid(form)
+        return HttpResponseRedirect(self.get_success_url())
 
 
 class AboutView(TemplateView):
@@ -47,3 +50,24 @@ class PostUpdateView(UserEditCheckMixin, UpdateView):
 
 class PostDeleteView(UserEditCheckMixin, DeleteView):
     model = Post
+
+
+class CommentCreateView(LoginRequiredMixin, CreateView):
+    model = Comment
+    fields = 'text',
+    template_name = 'blog/post_form.html'
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.author = self.request.user
+        self.object.post = Post.objects.get(pk=self.kwargs.get('pk'))
+        self.object.approved = False
+        self.object.save()
+        return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        return reverse('blog:post_detail', kwargs={'pk': self.kwargs.get('pk')})
+
+
+class CommentDeleteView(UserEditCheckMixin, DeleteView):
+    model = Comment
